@@ -1,10 +1,29 @@
-body {
-    padding: 0;
-    margin: 0;
+
+/* This code puts map in a box, still not sure how to center */
+/* html, body {
+    height:100%;
+    width:100%;
 }
+    
+    #map-container{
+        padding-top: 120px;
+        padding-left:10px
+    }
+    
+    #map{
+        margin: 0;
+        padding: 0;
+        position: center;
+        border: 1px solid black;
+        border-radius:8px;
+        height: 400px;
+        width: 50%;
+    } */
+
 
 #map,
 body,
 html{
     height: 100%
 }
+
