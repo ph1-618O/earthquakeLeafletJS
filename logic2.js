@@ -1,9 +1,9 @@
-//day is also fast
-var queryJson = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson"
 //hour, is faster
 //var queryJson = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson"
+//day is also fast
+// var queryJson = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson"
 //month for more detail, add options later
-// var queryJson = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson"
+var queryJson = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson"
 // from Class example
 // var queryJson = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=" +
 //     "2014-01-02&maxlongitude=-69.52148437&minlongitude=-123.83789062&maxlatitude=48.74894534&minlatitude=25.16517337";
@@ -12,24 +12,51 @@ function markerSize(mag) {
     return mag * 30000;
 }
 
-// need to make shallow 0-70km, inter 70-300, and deep 300-700 cases
+//Changing from magnitude to depth
 function color(depth) {
     switch (true) {
-        case depth > 5:
-            return "#0083c3";
-        case depth > 4:
-            return "#31e89d"; //"#4094b4";
-        case depth > 3:
-            return "#ffb400";
-        case depth > 2:
-            return "#ff9a00";
-        case depth > 1:
-            return "#ff7400";
-        case depth = 1:
+        case depth < 5:
             return "#ff0000";
-
+        case depth < 10 && depth >= 5:
+            return "#ff7400";
+        case depth < 25 && depth >= 10:
+            return "#ff9a00";
+        case depth < 50 && depth >= 25:
+            return "#ffb400";
+        case depth < 70 && depth >= 50:
+            return "#f3de11";
+        case depth < 300 && depth >= 70:
+            return "#31e89d";
+        case depth < 700 && depth >= 300:
+            return "#4094b4";
+        case depth >= 700:
+            return "#942FF9";
     }
 };
+
+
+
+//"#ff0000", "#ff7400", "#ff9a00", "#ffb400", "#f3de11", "#31e89d", "#4094b4", "#0083c3", purple"#942FF9"
+
+// need to make shallow 0-70km, inter 70-300, and deep 300-700 cases
+//for magnitude option
+// function color(depth) {
+//     switch (true) {
+//         case depth > 5:
+//             return "#0083c3";
+//         case depth > 4:
+//             return "#31e89d"; //"#4094b4";
+//         case depth > 3:
+//             return "#ffb400";
+//         case depth > 2:
+//             return "#ff9a00";
+//         case depth > 1:
+//             return "#ff7400";
+//         case depth = 1:
+//             return "#ff0000";
+
+//     }
+// };
 
 //2
 d3.json(queryJson, function (mapData) {
@@ -117,6 +144,19 @@ function buildMap(quakes) {
     legend.onAdd = function () {
         console.log('working')
         var div = L.DomUtil.create('div', 'info legend');
+        var depth =["Shallow: 0 - 5km", "Shallow: 5 - 10km", "Shallow: 10 - 25km", "Shallow: 25 - 50km", "Shallow: 50 - 70km", "Intermediate: 70 - 300km", "Deep: 300 - 700km"]
+        var depthColors = [
+            "#ff0000", 
+            "#ff7400", 
+            "#ff9a00", 
+            "#ffb400", 
+            "#f3de11", 
+            "#31e89d", 
+            "#4094b4", 
+            "#942FF9",
+        ]
+        var grades = [0, 5, 10, 25, 50, 70, 300, 700]
+        //for magnitude option later
         var sizes = [0, 1, 2, 3, 4, 5, 6, 7];
         var colors = [
             "#ff0000",
@@ -135,11 +175,16 @@ function buildMap(quakes) {
             "<h6>Earthquake Depth</h6>"
         div.innerHTML = legendInfo;
 
-//code below works, trying code from web
-        sizes.forEach(function (size, index) {
-            labels.push("<div class=\'labels\'>" + "<li style=\"background-color: " + colors[index] + "\">" + sizes[index] + (sizes[index + 1] ? "&ndash;" + sizes[index + 1] + "<br>" : " + ") + "</li");
+        grades.forEach(function (depth, index) {
+            labels.push("<div class=\'labels\'>" + "<li style=\"background-color: " + depthColors[index] + "\">" + grades[index] + (grades[index + 1] ? "&ndash;" + grades[index + 1] + "<br>" : " + ") + "</li");
         });
         div.innerHTML += "<ul>" + labels.join("") + "</ul>";
+
+//code below works, keep for using magnitude as an option later
+        // sizes.forEach(function (size, index) {
+        //     labels.push("<div class=\'labels\'>" + "<li style=\"background-color: " + colors[index] + "\">" + sizes[index] + (sizes[index + 1] ? "&ndash;" + sizes[index + 1] + "<br>" : " + ") + "</li");
+        // });
+        // div.innerHTML += "<ul>" + labels.join("") + "</ul>";
         return div;
     }
     // console.log(div);
