@@ -12,19 +12,21 @@ function markerSize(mag) {
     return mag * 30000;
 }
 
-
-function color(strength) {
+// need to make shallow 0-70km, inter 70-300, and deep 300-700 cases
+function color(depth) {
     switch (true) {
-        case strength > 5:
-            return "#ff7400"; //"#ff0000"; 
-        case strength > 4:
-            return "#ff9a00";
-        case strength > 3:
-            return "#ffb400";
-        case strength > 2:
-            return "#4094b4";
-        case strength > 1:
+        case depth > 5:
             return "#0083c3";
+        case depth > 4:
+            return "#31e89d"; //"#4094b4";
+        case depth > 3:
+            return "#ffb400";
+        case depth > 2:
+            return "#ff9a00";
+        case depth > 1:
+            return "#ff7400";
+        case depth = 1:
+            return "#ff0000";
 
     }
 };
@@ -109,42 +111,55 @@ function buildMap(quakes) {
     }).addTo(stackLayers);
 
     var legend = L.control({
-        position: 'bottomright'
+        position: 'topleft'
     });
 
     legend.onAdd = function () {
         console.log('working')
         var div = L.DomUtil.create('div', 'info legend');
-            var sizes = [0, 1, 2, 3, 4, 5];
+            var sizes = [0, 1, 2, 3, 4, 5, 6, 7];
             var colors = [
+            "#ff0000",
             "#ff7400",
             "#ff9a00",
             "#ffb400",
+            "#f3de11",
+            "#31e89d",
             "#4094b4",
-            "#ff0000",
             "#0083c3"];
             var labels = [];
-            // var i,  
+        //     var i;  
+        //     for (var i = 0; i < sizes.length; i++) {
+        //     div.innerHTML +=
+        //         "<style='background: " + colors[i] + "'></style>" + sizes[i] + (sizes[i + 1] ? "&ndash;" + sizes[i + 1] + "<br>" : " + ");
+        // }
+        // return div;
+        
+
+
 
         var legendInfo = 
-                        "<h1>Earthquake Depth</h1>" + 
-                        "<div class=\"labels\">" +
-                        "<div class=\"min\">" + sizes[0] + "<div>" +
-                        "<div class=\"max\">" + sizes[sizes.length-1] + "</div>" +
-                        "<div>";
+                        "<h6>Earthquake Depth</h6>" //+ 
+                        //"<div class=\"labels\">";
+                        // "<div class=\"min\">" + sizes[0] + "<div>" +
+                        // "<div class=\"max\">" + sizes[sizes.length-1] + "</div>" 
+                        
         div.innerHTML = legendInfo;
         sizes.forEach(function(size, index){
-            labels.push("<li style=\"background-color: " + colors[index] + "\"></li");
+            labels.push("<div class=\'labels\'>" + "<li style=\"background-color: " + colors[index] + "\"></li");
         });
         div.innerHTML += "<ul>" + labels.join("") + "</ul>";
         return div;
-        // for (var i = 0; i < sizes.length; i++) {
-        //     console.log('???');
-            // div.innerHTML +=
-            //     "<i style='background: " + colors[i] + "'></i>" + sizes[i] + (sizes[i + 1] ? "&ndash;" + sizes[i + 1] + "<br>" : " + ");
         }
         // console.log(div);
         legend.addTo(stackLayers);
         
     };
+    // legend.addTo(stackLayers);
 
+
+        // for (var i = 0; i < sizes.length; i++) {
+        //     console.log('???');
+            // div.innerHTML +=
+            //     "<i style='background: " + colors[i] + "'></i>"
+            //  + sizes[i] + (sizes[i + 1] ? "&ndash;" + sizes[i + 1] + "<br>" : " + ");
