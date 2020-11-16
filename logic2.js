@@ -84,7 +84,7 @@ function buildMap(quakes) {
         accessToken: API_KEY
     });
 
-    var terrain = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}",{
+    var terrain = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
         attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
         maxZoom: 18,
         id: "mapbox.mapbox-terrain-v2",
@@ -97,7 +97,7 @@ function buildMap(quakes) {
         "Terrain": terrain
     };
     var overlayMap = {
-        quakes,
+        "Quake Depth":quakes,
     };
     var stackLayers = L.map("map", {
         center: [
@@ -117,8 +117,8 @@ function buildMap(quakes) {
     legend.onAdd = function () {
         console.log('working')
         var div = L.DomUtil.create('div', 'info legend');
-            var sizes = [0, 1, 2, 3, 4, 5, 6, 7];
-            var colors = [
+        var sizes = [0, 1, 2, 3, 4, 5, 6, 7];
+        var colors = [
             "#ff0000",
             "#ff7400",
             "#ff9a00",
@@ -126,40 +126,23 @@ function buildMap(quakes) {
             "#f3de11",
             "#31e89d",
             "#4094b4",
-            "#0083c3"];
-            var labels = [];
-        //     var i;  
-        //     for (var i = 0; i < sizes.length; i++) {
-        //     div.innerHTML +=
-        //         "<style='background: " + colors[i] + "'></style>" + sizes[i] + (sizes[i + 1] ? "&ndash;" + sizes[i + 1] + "<br>" : " + ");
-        // }
-        // return div;
-        
+            "#0083c3"
+        ];
+        var labels = [];
 
-
-
-        var legendInfo = 
-                        "<h6>Earthquake Depth</h6>" //+ 
-                        //"<div class=\"labels\">";
-                        // "<div class=\"min\">" + sizes[0] + "<div>" +
-                        // "<div class=\"max\">" + sizes[sizes.length-1] + "</div>" 
-                        
+//adding legend header
+        var legendInfo =
+            "<h6>Earthquake Depth</h6>"
         div.innerHTML = legendInfo;
-        sizes.forEach(function(size, index){
-            labels.push("<div class=\'labels\'>" + "<li style=\"background-color: " + colors[index] + "\"></li");
+
+//code below works, trying code from web
+        sizes.forEach(function (size, index) {
+            labels.push("<div class=\'labels\'>" + "<li style=\"background-color: " + colors[index] + "\">" + sizes[index] + (sizes[index + 1] ? "&ndash;" + sizes[index + 1] + "<br>" : " + ") + "</li");
         });
         div.innerHTML += "<ul>" + labels.join("") + "</ul>";
         return div;
-        }
-        // console.log(div);
-        legend.addTo(stackLayers);
-        
-    };
-    // legend.addTo(stackLayers);
+    }
+    // console.log(div);
+    legend.addTo(stackLayers);
 
-
-        // for (var i = 0; i < sizes.length; i++) {
-        //     console.log('???');
-            // div.innerHTML +=
-            //     "<i style='background: " + colors[i] + "'></i>"
-            //  + sizes[i] + (sizes[i + 1] ? "&ndash;" + sizes[i + 1] + "<br>" : " + ");
+}
