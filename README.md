@@ -1,6 +1,7 @@
 # Earthquakes with Leaflet
 Visualizing USGS Earthquake data with leaflet.js
-- This application sources current month long data from the Earthquake Data USGS. If desired, you can change the code to query the days results or the all year results switching the var queryJson link to the ones included below::
+- This application sources current month long data from the Earthquake Data USGS. 
+- If you so desire, you can change the code to query the hours results or the days results switching the var queryJson link to the ones included below::
 - By the Hour
 var queryJson = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson"
 - By the Day
