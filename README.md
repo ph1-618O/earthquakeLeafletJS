@@ -2,7 +2,7 @@
 Visualizing USGS Earthquake data with leaflet.js
 
 Satellite Map::
-![Satellite Map](https://github.com/ph1-618O/earthquakeLeafletJS/blob/main/satellite_map2.png)
+![Satellite Map](https://github.com/ph1-618O/earthquakeLeafletJS/blob/main/big_satellite_map.jpg)
 
 Terrain Map:: 
-![Terrain Map](https://github.com/ph1-618O/earthquakeLeafletJS/blob/main/dark_map2.png)
+![Terrain Map](https://github.com/ph1-618O/earthquakeLeafletJS/blob/main/big_dark.jpg)
