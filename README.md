@@ -6,7 +6,7 @@ Visualizing USGS Earthquake data with leaflet.js
 var queryJson = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson"
 - By the Day
 var queryJson = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson"
-- By the month/ current settings
+- By the Month/ current settings
 var queryJson = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson"
 
 # How to use this code::
